@@ -3,6 +3,7 @@ goog.provide('gmf.editfeatureselectorDirective');
 
 goog.require('goog.asserts');
 goog.require('gmf');
+goog.require('gmf.Themes');
 goog.require('gmf.TreeManager');
 /** @suppress {extraRequire} */
 goog.require('gmf.editfeatureDirective');
@@ -55,13 +56,15 @@ gmf.module.directive('gmfEditfeatureselector', gmf.editfeatureselectorDirective)
 /**
  * @param {!angular.Scope} $scope Angular scope.
  * @param {angular.$timeout} $timeout Angular timeout service.
+ * @param {gmf.Themes} gmfThemes The gmf Themes service.
  * @param {gmf.TreeManager} gmfTreeManager The gmf TreeManager service.
  * @constructor
  * @ngInject
  * @ngdoc controller
  * @ngname GmfEditfeatureselectorController
  */
-gmf.EditfeatureselectorController = function($scope, $timeout, gmfTreeManager) {
+gmf.EditfeatureselectorController = function($scope, $timeout, gmfThemes,
+    gmfTreeManager) {
 
   // === Directive options ===
 
@@ -100,10 +103,22 @@ gmf.EditfeatureselectorController = function($scope, $timeout, gmfTreeManager) {
   // === Injected services ===
 
   /**
+   * @type {!angular.Scope} $scope Angular scope.
+   * @private
+   */
+  this.scope_ = $scope;
+
+  /**
    * @type {angular.$timeout}
    * @private
    */
   this.$timeout_ = $timeout;
+
+  /**
+   * @type {gmf.Themes}
+   * @private
+   */
+  this.gmfThemes_ = gmfThemes;
 
   /**
    * @type {gmf.TreeManager}
