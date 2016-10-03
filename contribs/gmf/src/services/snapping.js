@@ -150,7 +150,7 @@ gmf.Snapping.prototype.setMap = function(map) {
   if (this.map_) {
     this.treeCtrlsUnregister_();
     this.unregisterAllTreeCtrl_();
-    keys.forEach(ol.events.unlistenByKey)
+    keys.forEach(ol.events.unlistenByKey);
     keys.length = 0;
   }
 
@@ -274,11 +274,11 @@ gmf.Snapping.prototype.registerTreeCtrl_ = function(treeCtrl) {
  */
 gmf.Snapping.prototype.unregisterAllTreeCtrl_ = function() {
   for (var uid in this.cache_) {
-    var item = this.cache_[uid];
+    var item = this.cache_[+uid];
     if (item) {
       item.stateWatcherUnregister();
       this.deactivateItem_(item);
-      delete this.cache_[uid];
+      delete this.cache_[+uid];
     }
   }
 };
