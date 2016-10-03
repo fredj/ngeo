@@ -149,21 +149,25 @@ gmf.Snapping.prototype.setMap = function(map) {
 
   if (this.map_) {
     this.treeCtrlsUnregister_();
-    for (var i = 0, ii = keys.length; i < ii; ++i) {
-      ol.events.unlistenByKey(keys[i]);
-    }
+    this.unregisterAllTreeCtrl_();
+    keys.forEach(ol.events.unlistenByKey)
     keys.length = 0;
   }
 
   this.map_ = map;
 
   if (map) {
-    this.treeCtrlsUnregister_ = this.rootScope_.$watchCollection(
-      function() {
-        return this.gmfTreeManager_.getTreeCtrlReferences();
-      }.bind(this),
-      this.handleTreeCtrlsChange_.bind(this)
-    );
+    this.treeCtrlsUnregister_ = this.rootScope_.$watchCollection(function() {
+      if (this.gmfTreeManager_.rootCtrl) {
+        return this.gmfTreeManager_.rootCtrl.children;
+      }
+    }.bind(this), function(value) {
+      if (value) {
+        this.unregisterAllTreeCtrl_();
+        this.gmfTreeManager_.rootCtrl.traverseDepthFirst(this.registerTreeCtrl_.bind(this));
+      }
+    }.bind(this));
+
     keys.push(
       ol.events.listen(
         this.gmfThemes_,
@@ -190,30 +194,6 @@ gmf.Snapping.prototype.setMap = function(map) {
         this
       )
     );
-  }
-};
-
-
-/**
- * @param {Array.<ngeo.LayertreeController>} newVal New list of treeCtrls
- * @param {Array.<ngeo.LayertreeController>} oldVal Old list of treeCtrls
- * @export
- */
-gmf.Snapping.prototype.handleTreeCtrlsChange_ = function(newVal, oldVal) {
-  var i, ii;
-
-  // (1) Register newly added Layertree controllers
-  for (i = 0, ii = newVal.length; i < ii; i++) {
-    if (oldVal.indexOf(newVal[i]) === -1) {
-      this.registerTreeCtrl_(newVal[i]);
-    }
-  }
-
-  // (2) Unregister removed Layertree controllers
-  for (i = 0, ii = oldVal.length; i < ii; i++) {
-    if (newVal.indexOf(oldVal[i]) === -1) {
-      this.unregisterTreeCtrl_(oldVal[i]);
-    }
   }
 };
 
@@ -287,19 +267,19 @@ gmf.Snapping.prototype.registerTreeCtrl_ = function(treeCtrl) {
 
 
 /**
- * Unregisters a removed Layertree controller 'leaf'. Remove the according
+ * Unregisters all removed layertree controllers 'leaf'. Remove the according
  * cache item and deactivate it as well. Unregister events.
  *
- * @param {ngeo.LayertreeController} treeCtrl Layertree controller to register
  * @private
  */
-gmf.Snapping.prototype.unregisterTreeCtrl_ = function(treeCtrl) {
-  var uid = goog.getUid(treeCtrl);
-  var item = this.cache_[uid];
-  if (item) {
-    item.stateWatcherUnregister();
-    this.deactivateItem_(item);
-    delete this.cache_[uid];
+gmf.Snapping.prototype.unregisterAllTreeCtrl_ = function() {
+  for (var uid in this.cache_) {
+    var item = this.cache_[uid];
+    if (item) {
+      item.stateWatcherUnregister();
+      this.deactivateItem_(item);
+      delete this.cache_[uid];
+    }
   }
 };
 
