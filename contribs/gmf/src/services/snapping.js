@@ -162,10 +162,14 @@ gmf.Snapping.prototype.setMap = function(map) {
         return this.gmfTreeManager_.rootCtrl.children;
       }
     }.bind(this), function(value) {
-      if (value) {
-        this.unregisterAllTreeCtrl_();
-        this.gmfTreeManager_.rootCtrl.traverseDepthFirst(this.registerTreeCtrl_.bind(this));
-      }
+      // Timeout required, because the collection event is fired before the
+      // leaf nodes are created and they are the ones we're looking for here.
+      this.timeout_(function() {
+        if (value) {
+          this.unregisterAllTreeCtrl_();
+          this.gmfTreeManager_.rootCtrl.traverseDepthFirst(this.registerTreeCtrl_.bind(this));
+        }
+      }.bind(this), 0);
     }.bind(this));
 
     keys.push(
