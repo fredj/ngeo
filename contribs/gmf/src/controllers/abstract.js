@@ -40,6 +40,8 @@ goog.require('ol.style.Fill');
 goog.require('ol.style.Stroke');
 goog.require('ol.style.Style');
 
+goog.require('gmf.workshopDirective');
+
 
 gmf.module.value('ngeoExportFeatureFormats', [
   ngeo.FeatureHelper.FormatType.KML,

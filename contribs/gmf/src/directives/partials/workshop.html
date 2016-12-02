@@ -1,0 +1,16 @@
+<div>
+  <p>
+    <code>workshop</code> url parameter value is <code>{{ctrl.value}}</code>
+  </p>
+
+  <p>
+    <div>The map center is <code>{{ctrl.map.getView().getCenter() | ngeoNumberCoordinates:0:'{x} / {y}'}}</code></div>
+    <div>The map zoom is <code>{{ctrl.map.getView().getZoom()}}</code></div>
+  </p>
+
+  <div ng-repeat="message in ctrl.messages">
+    {{message.name}} is {{message.state}}
+    <a href="" ng-click="ctrl.toggleTreeState(message.tree)">Undo</a>
+  </div>
+
+</div>

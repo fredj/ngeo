@@ -110,6 +110,7 @@
           <li>
             <a href data-target="#measure-tools" data-toggle="slide-in" class="gmf-mobile-nav-button">{{'Measure tools' | translate}}</a>
             <a href data-target="#login" data-toggle="slide-in" class="gmf-mobile-nav-button">{{'Login' | translate}}</a>
+            <a href data-target="#workshop" data-toggle="slide-in" class="gmf-mobile-nav-button">{{'Workshop' | translate}}</a>
           </li>
         </ul>
       </div>
@@ -138,6 +139,10 @@
       <gmf-authentication id="login" class="gmf-mobile-nav-slide" data-header-title="{{'Login' | translate}}"
         gmf-mobile-nav-back="authCtrl.gmfUser.username !== null">
       </gmf-authentication>
+      <gmf-workshop id="workshop" class="gmf-mobile-nav-slide" data-header-title="{{'Workshop' | translate}}"
+        map="mainCtrl.map">
+      </gmf-workshop>
+
     </nav>
     <script src="../../../../node_modules/jquery/dist/jquery.js"></script>
     <script src="../../../../third-party/jquery-ui/jquery-ui.min.js"></script>

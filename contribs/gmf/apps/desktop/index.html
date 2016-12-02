@@ -64,6 +64,10 @@
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Profile'|translate}}">
               <span class="fa fa-area-chart"></span>
             </button>
+            <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.workshopPanelActive"
+              data-toggle="tooltip" data-placement="left" data-original-title="{{'Workshop'|translate}}">
+              <span class="fa fa-info"></span>
+            </button>
           </div>
           <br/>
           <br/>
@@ -152,6 +156,17 @@
               </div>
             </div>
           </div>
+
+          <div ng-show="mainCtrl.workshopPanelActive" class="row">
+            <div class="col-sm-12">
+              <div class="gmf-app-tools-content-heading">
+                {{'Workshop' | translate}}
+                <a class="btn close" ng-click="mainCtrl.workshopPanelActive = false">&times;</a>
+              </div>
+              <gmf-workshop map="mainCtrl.map"></gmf-workshop>
+            </div>
+          </div>
+
         </div>
       </div>
       <div class="gmf-app-map-container" ng-class="{'gmf-app-infobar-active': mainCtrl.showInfobar}">
