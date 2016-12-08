@@ -1,5 +1,7 @@
 goog.provide('ngeo.workshop');
 
+goog.require('ngeo.filters');
+
 
 ngeo.workshopDirective = function() {
   return {
