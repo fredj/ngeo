@@ -53,6 +53,7 @@ goog.require('ngeo.ToolActivateMgr');
 goog.require('ol.Collection');
 goog.require('ol.Map');
 goog.require('ol.View');
+goog.require('ol.control.Rotate');
 goog.require('ol.control.ScaleLine');
 goog.require('ol.control.Zoom');
 goog.require('ol.interaction');
@@ -98,6 +99,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
     layers: [],
     view: new ol.View(viewConfig),
     controls: config.mapControls || [
+      new ol.control.Rotate(),
       new ol.control.ScaleLine({
         target: document.getElementById('scaleline')
       }),
@@ -106,10 +108,7 @@ gmf.AbstractDesktopController = function(config, $scope, $injector) {
         zoomOutTipLabel: ''
       })
     ],
-    interactions: config.mapInteractions || ol.interaction.defaults({
-      pinchRotate: false,
-      altShiftDragRotate: false
-    }),
+    interactions: config.mapInteractions || ol.interaction.defaults(),
     loadTilesWhileAnimating: true,
     loadTilesWhileInteracting: true
   });

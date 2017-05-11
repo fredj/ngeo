@@ -20,6 +20,7 @@ goog.require('ngeo.mobileGeolocationDirective');
 goog.require('ngeo.mapQueryDirective');
 goog.require('ol.Map');
 goog.require('ol.View');
+goog.require('ol.control.Rotate');
 goog.require('ol.control.ScaleLine');
 goog.require('ol.control.Zoom');
 goog.require('ol.interaction');
@@ -118,15 +119,14 @@ gmf.AbstractMobileController = function(config, $scope, $injector) {
     layers: [],
     view: new ol.View(viewConfig),
     controls: config.mapControls || [
+      new ol.control.Rotate(),
       new ol.control.ScaleLine(),
       new ol.control.Zoom({
         zoomInTipLabel: '',
         zoomOutTipLabel: ''
       })
     ],
-    interactions:
-        config.mapInteractions ||
-        ol.interaction.defaults({pinchRotate: false})
+    interactions: config.mapInteractions || ol.interaction.defaults()
   });
 
   gmf.AbstractController.call(this, config, $scope, $injector);
