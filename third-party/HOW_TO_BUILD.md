@@ -6,9 +6,10 @@
 
 1. go to [jquery custom package builder](http://jqueryui.com/download/)
 2. Currently the following items have been selected:
-  - jquery-ui version 1.11.4
+  - jquery-ui version 1.12.1
   - All ui core dependencies
   - Widgets datepicker and slider
+  - Interaction draggable
 3. Get the locales for datepicker
   - Unfortunately the custom build do not allow us to pick up translation files
   for the datepicker. By default, it's the english version.
@@ -19,6 +20,7 @@
     3. Append to the the end of the file each js locale file from github. Currently:
       - datepicker-de.js
       - datepicker-fr.js
+      - datepicker-it.js
     4. minify the modified jquery-ui.js file.
 
       1. npm install uglify-js -g
