@@ -267,7 +267,7 @@ test-debug: .build/ol-deps.js .build/ngeo-deps.js .build/gmf-deps.js .build/temp
 
 .PHONY: serve
 serve: .build/node_modules.timestamp $(JQUERY_UI) $(FONTAWESOME_WEBFONT) $(ANGULAR_LOCALES_FILES)
-	node buildtools/serve.js
+	NODE_ENV=dev TARGET=ngeo-examples node_modules/.bin/webpack-dev-server
 
 .PHONY: examples-hosted
 examples-hosted: \
